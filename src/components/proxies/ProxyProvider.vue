@@ -71,12 +71,11 @@ import { proxyProviderHealthCheckAPI, updateProxyProviderAPI } from '@/assembly/
 import { useBounceOnVisible } from '@/composables/bouncein'
 import { useRenderProxyList } from '@/composables/renderProxies'
 import { notifyRequestError } from '@/helper/requestError'
-import { fromNow, prettyBytesHelper } from '@/helper/utils'
+import { getProviderSubscriptionInfo } from '@/helper'
+import { fromNow } from '@/helper/utils'
 import { fetchProxies } from '@/assembly/proxies'
 import { proxyProviederList } from '@/assembly/proxies'
 import { ArrowPathIcon, BoltIcon } from '@heroicons/vue/24/outline'
-import dayjs from 'dayjs'
-import { toFinite } from 'lodash'
 import { twMerge } from 'tailwind-merge'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -88,43 +87,17 @@ const props = defineProps<{
   name: string
 }>()
 
-const proxyProvider = computed(() =>
-  proxyProviederList.value.find((group) => group.name === props.name)!,
+const { t } = useI18n()
+
+const proxyProvider = computed(
+  () => proxyProviederList.value.find((group) => group.name === props.name)!,
 )
 const allProxies = computed(() => proxyProvider.value.proxies.map((node) => node.name) ?? [])
 const { renderProxies, proxiesCount } = useRenderProxyList(allProxies)
 
-const subscriptionInfo = computed(() => {
-  const info = proxyProvider.value.subscriptionInfo
-
-  if (info) {
-    const { Download = 0, Upload = 0, Total = 0, Expire = 0 } = info
-
-    if (Download === 0 && Upload === 0 && Total === 0 && Expire === 0) {
-      return null
-    }
-
-    const { t } = useI18n()
-    const total = prettyBytesHelper(Total, { binary: true })
-    const used = prettyBytesHelper(Download + Upload, { binary: true })
-    const percentage = toFinite((((Download + Upload) / Total) * 100).toFixed(2))
-    const expireStr =
-      Expire === 0
-        ? `${t('expire')}: ${t('noExpire')}`
-        : `${t('expire')}: ${dayjs(Expire * 1000).format('YYYY-MM-DD')}`
-
-    const usedStr = `${used} / ${total}`
-    const usageStr = Total === 0 ? usedStr : `${usedStr} ( ${percentage}% )`
-
-    return {
-      expireStr,
-      usageStr,
-      percentage: Math.min(percentage, 100),
-    }
-  }
-
-  return null
-})
+const subscriptionInfo = computed(() =>
+  getProviderSubscriptionInfo(proxyProvider.value.subscriptionInfo, t),
+)
 
 const usageBarColor = computed(() => {
   const pct = subscriptionInfo.value?.percentage ?? 0

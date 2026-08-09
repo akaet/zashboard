@@ -7,6 +7,7 @@ import { activeBackend } from '@/store/setup'
 import ConnectionsPage from '@/views/ConnectionsPage.vue'
 import HomePage from '@/views/HomePage.vue'
 import LogsPage from '@/views/LogsPage.vue'
+import NodesPage from '@/views/NodesPage.vue'
 import OverviewPage from '@/views/OverviewPage.vue'
 import ProxiesPage from '@/views/ProxiesPage.vue'
 import RulesPage from '@/views/RulesPage.vue'
@@ -51,6 +52,11 @@ const childrenRouter = [
     path: 'settings',
     name: ROUTE_NAME.settings,
     component: SettingsPage,
+  },
+  {
+    path: 'nodes',
+    name: ROUTE_NAME.nodes,
+    component: NodesPage,
   },
 ]
 

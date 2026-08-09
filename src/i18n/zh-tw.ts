@@ -4,6 +4,7 @@ const zhTW: LANG_MESSAGE = {
   // Navigation
   setup: '配置',
   overview: '概覽',
+  nodes: '節點',
   proxies: '代理',
   rules: '規則',
   connections: '連接',
@@ -202,6 +203,9 @@ const zhTW: LANG_MESSAGE = {
   outbound: '出站節點',
   proxyGroup: '策略組',
   sortBy: '排序方式',
+  speedTestText: '測速',
+  expandText: '展開',
+  collapseText: '收起',
   rule: '規則',
   sourceIP: '源IP',
   activeConnections: '活躍',

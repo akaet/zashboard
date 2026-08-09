@@ -4,6 +4,7 @@ const zh: LANG_MESSAGE = {
   // Navigation
   setup: '配置',
   overview: '概览',
+  nodes: '节点',
   proxies: '代理',
   rules: '规则',
   connections: '连接',
@@ -202,6 +203,9 @@ const zh: LANG_MESSAGE = {
   outbound: '出站节点',
   proxyGroup: '策略组',
   sortBy: '排序方式',
+  speedTestText: '测速',
+  expandText: '展开',
+  collapseText: '收起',
   rule: '规则',
   sourceIP: '源IP',
   activeConnections: '活跃',

@@ -4,6 +4,7 @@ const ru: LANG_MESSAGE = {
   // Navigation
   setup: 'Настройка',
   overview: 'Обзор',
+  nodes: 'Узлы',
   proxies: 'Прокси',
   rules: 'Правила',
   connections: 'Подключения',
@@ -203,6 +204,9 @@ const ru: LANG_MESSAGE = {
   outbound: 'Исходящий',
   proxyGroup: 'Группа прокси',
   sortBy: 'Сортировать по',
+  speedTestText: 'Тест скорости',
+  expandText: 'Развернуть',
+  collapseText: 'Свернуть',
   rule: 'Правило',
   sourceIP: 'Исходный IP',
   activeConnections: 'Активные',

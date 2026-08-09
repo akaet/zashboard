@@ -4,6 +4,7 @@ import {
   CubeTransparentIcon,
   DocumentTextIcon,
   GlobeAltIcon,
+  ServerStackIcon,
   SwatchIcon,
   WrenchScrewdriverIcon,
 } from '@heroicons/vue/24/outline'
@@ -164,9 +165,11 @@ export enum ROUTE_NAME {
   tools = 'tools',
   settings = 'settings',
   setup = 'setup',
+  nodes = 'nodes',
 }
 
 export const ROUTE_ICON_MAP = {
+  [ROUTE_NAME.nodes]: ServerStackIcon,
   [ROUTE_NAME.overview]: CubeTransparentIcon,
   [ROUTE_NAME.proxies]: GlobeAltIcon,
   [ROUTE_NAME.connections]: ArrowsRightLeftIcon,
@@ -213,6 +216,7 @@ export enum PROXY_TYPE {
   URLTest = 'urltest',
   Smart = 'smart',
   LoadBalance = 'loadbalance',
+  PassRule = 'passrule',
 }
 
 export const SIMPLE_CARD_STYLE = [

@@ -2,6 +2,7 @@ const en = {
   // Navigation
   setup: 'Setup',
   overview: 'Overview',
+  nodes: 'Nodes',
   proxies: 'Proxies',
   rules: 'Rules',
   connections: 'Connections',
@@ -201,6 +202,9 @@ const en = {
   outbound: 'Outbound',
   proxyGroup: 'Proxy group',
   sortBy: 'Sort by',
+  speedTestText: 'Speed Test',
+  expandText: 'Expand',
+  collapseText: 'Collapse',
   rule: 'Rule',
   sourceIP: 'Source IP',
   activeConnections: 'Active',
