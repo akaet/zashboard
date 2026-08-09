@@ -2,6 +2,7 @@ import { connectionAccessor } from '@/assembly/connections'
 import { hiddenGroupMap, proxyMap } from '@/assembly/proxies'
 import { NOT_CONNECTED, PROXY_CHAIN_DIRECTION, PROXY_TYPE, ROUTE_NAME } from '@/constant'
 import { showNotification } from '@/helper/notification'
+import { prettyBytesHelper } from '@/helper/utils'
 import {
   customThemes,
   lowLatency,
@@ -9,8 +10,10 @@ import {
   proxyChainDirection,
   splitOverviewPage,
 } from '@/store/settings'
-import type { Connection } from '@/types'
+import type { Connection, Proxy, SubscriptionInfo } from '@/types'
 import * as ipaddr from 'ipaddr.js'
+import dayjs from 'dayjs'
+import { toFinite } from 'lodash'
 import { computed } from 'vue'
 
 const PROXY_GROUP_TYPES = new Set<string>(Object.values(PROXY_TYPE))
@@ -108,6 +111,56 @@ export const getColorForLatency = (latency: number) => {
     return 'text-medium-latency'
   } else {
     return 'text-high-latency'
+  }
+}
+
+// 节点延迟历史 tooltip 的公共构建器,供 LatencyTag / NodesPage 等复用。
+export const createLatencyHistoryTip = (history: Proxy['history']) => {
+  const container = document.createElement('div')
+  container.classList.add('flex', 'flex-col', 'gap-1')
+
+  for (const item of history) {
+    const row = document.createElement('div')
+    row.classList.add('flex', 'items-center', 'gap-2')
+    const time = document.createElement('span')
+    time.textContent = dayjs(item.time).format('YYYY-MM-DD HH:mm:ss')
+    time.className = 'text-xs'
+    const delay = document.createElement('span')
+    delay.textContent = item.delay + 'ms'
+    delay.className = getColorForLatency(item.delay) + ' text-xs'
+    row.append(time, delay)
+    container.append(row)
+  }
+
+  return container
+}
+
+// 订阅信息(流量/到期)的统一格式化,供 ProxyProvider / NodesPage 复用。
+export const getProviderSubscriptionInfo = (
+  info: SubscriptionInfo | undefined,
+  t: (key: string) => string,
+) => {
+  if (!info) return null
+
+  const { Download = 0, Upload = 0, Total = 0, Expire = 0 } = info
+
+  if (Download === 0 && Upload === 0 && Total === 0 && Expire === 0) return null
+
+  const total = prettyBytesHelper(Total, { binary: true })
+  const used = prettyBytesHelper(Download + Upload, { binary: true })
+  const percentage = toFinite((((Download + Upload) / Total) * 100).toFixed(2))
+  const expireStr =
+    Expire === 0
+      ? `${t('expire')}: ${t('noExpire')}`
+      : `${t('expire')}: ${dayjs(Expire * 1000).format('YYYY-MM-DD')}`
+
+  const usedStr = `${used} / ${total}`
+  const usageStr = Total === 0 ? usedStr : `${usedStr} ( ${percentage}% )`
+
+  return {
+    expireStr,
+    usageStr,
+    percentage: Math.min(percentage, 100),
   }
 }
 

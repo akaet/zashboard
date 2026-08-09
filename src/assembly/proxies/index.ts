@@ -158,4 +158,7 @@ export {
   flushSmartGroupWeightsAPI,
   proxyProviderHealthCheckAPI,
   updateProxyProviderAPI,
+  // NodesPage 的 URLTest 固定/取消固定(Clash REST 专属),经门面暴露给 view。
+  deleteFixedProxyAPI,
+  selectProxyAPI,
 } from '@/api/clash'
