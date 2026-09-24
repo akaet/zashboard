@@ -3,6 +3,7 @@ import type { LANG_MESSAGE } from './en'
 const zh: LANG_MESSAGE = {
   setup: '配置',
   overview: '概览',
+  nodes: '节点',
   proxies: '代理',
   rules: '规则',
   connections: '连接',
@@ -59,6 +60,9 @@ const zh: LANG_MESSAGE = {
   noGrouping: '不分组',
   expandAllGroups: '展开全部分组',
   collapseAllGroups: '折叠全部分组',
+  speedTestText: '测速',
+  expandText: '展开',
+  collapseText: '收起',
   rule: '规则',
   sourceIP: '源IP',
   activeConnections: '活跃',
