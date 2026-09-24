@@ -1,6 +1,7 @@
 const en = {
   setup: 'Setup',
   overview: 'Overview',
+  nodes: 'Nodes',
   proxies: 'Proxies',
   rules: 'Rules',
   connections: 'Connections',
@@ -57,6 +58,9 @@ const en = {
   noGrouping: 'No grouping',
   expandAllGroups: 'Expand all groups',
   collapseAllGroups: 'Collapse all groups',
+  speedTestText: 'Speed Test',
+  expandText: 'Expand',
+  collapseText: 'Collapse',
   rule: 'Rule',
   sourceIP: 'Source IP',
   activeConnections: 'Active',

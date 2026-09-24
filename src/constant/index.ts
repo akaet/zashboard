@@ -4,6 +4,7 @@ import {
   CubeTransparentIcon,
   DocumentTextIcon,
   GlobeAltIcon,
+  ServerStackIcon,
   Squares2X2Icon,
   SwatchIcon,
 } from '@heroicons/vue/24/outline'
@@ -251,6 +252,7 @@ export enum ROUTE_NAME {
   rules = 'rules',
   settings = 'settings',
   setup = 'setup',
+  nodes = 'nodes',
 }
 
 export const ROUTE_ICON_MAP = {
@@ -261,6 +263,7 @@ export const ROUTE_ICON_MAP = {
   [ROUTE_NAME.logs]: DocumentTextIcon,
   [ROUTE_NAME.settings]: Cog6ToothIcon,
   [ROUTE_NAME.setup]: CubeTransparentIcon,
+  [ROUTE_NAME.nodes]: ServerStackIcon,
 }
 
 export enum TABLE_SIZE {
