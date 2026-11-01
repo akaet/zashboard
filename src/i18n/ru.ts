@@ -3,6 +3,7 @@ import type { LANG_MESSAGE } from './en'
 const ru: LANG_MESSAGE = {
   setup: 'Настройка',
   overview: 'Обзор',
+  nodes: 'Узлы',
   proxies: 'Прокси',
   rules: 'Правила',
   connections: 'Подключения',
@@ -59,6 +60,8 @@ const ru: LANG_MESSAGE = {
   noGrouping: 'Без группировки',
   expandAllGroups: 'Развернуть все группы',
   collapseAllGroups: 'Свернуть все группы',
+  expandText: 'Развернуть',
+  collapseText: 'Свернуть',
   rule: 'Правило',
   sourceIP: 'Исходный IP',
   activeConnections: 'Активные',
