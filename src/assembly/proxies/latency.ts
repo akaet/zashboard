@@ -104,7 +104,7 @@ const testLatencyOneByOneWithTip = async (
           const delay = await latencyTestForSingle(
             name,
             url,
-            Math.min(2000, speedtestTimeout.value),
+            speedtestTimeout.value,
           )
 
           setHistory(name, delay, groupName)

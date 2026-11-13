@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { smartWeightsMap } from '@/assembly/proxies'
-import { PROXY_CARD_SIZE, PROXY_SORT_TYPE } from '@/constant'
+import { PROXY_CARD_SIZE, PROXY_SORT_TYPE, NOT_CONNECTED } from '@/constant'
 import { checkTruncation } from '@/helper/tooltip'
 import {
   highlightProxyNode,
@@ -52,7 +52,7 @@ import {
   scrollNodeIntoViewKey,
 } from '@/helper/proxies-scroll'
 import { proxyLatencyTest } from '@/assembly/proxies'
-import { getIPv6ByName, getTestUrl, proxyMap } from '@/assembly/proxies'
+import { getIPv6ByName, getHistoryByName, getTestUrl, proxyMap } from '@/assembly/proxies'
 import { IPv6test, proxyCardSize, proxySortType, truncateProxyName } from '@/store/settings'
 import { computed, inject, nextTick, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -92,6 +92,15 @@ const latencyTipAnimationClass = computed(() =>
   highlightedProxyNode.value === props.name ? ['latency-highlight'] : [],
 )
 
+// 失败判定：最新一条历史是 NOT_CONNECTED 且历史非空(未测速不算失败)。
+// 注意 getHistoryByName 在"独立测速"模式下会惰性创建 extra[url] 桶(写入 proxyMap)，
+// 与 LatencyTag 的 tooltip 读取共用同一份数据，副作用有界(每个 url 一个空桶)，故不另做只读分支。
+const isFailed = computed(() => {
+  const history = getHistoryByName(props.name, props.groupName)
+
+  return Boolean(history?.length) && history[history.length - 1].delay === NOT_CONNECTED
+})
+
 const cardClass = computed(() => [
   'relative flex cursor-pointer flex-col items-start rounded-md hover:shadow-sm',
   props.active
@@ -99,6 +108,7 @@ const cardClass = computed(() => [
     : 'bg-base-200 sm:hover:bg-base-300/50',
   isSmallCard.value ? 'gap-1 p-1' : 'gap-2 p-2',
   latencyTipAnimationClass.value,
+  isFailed.value && 'opacity-40',
 ])
 const handlerLatencyTest = async () => {
   if (isLatencyTesting.value) return
